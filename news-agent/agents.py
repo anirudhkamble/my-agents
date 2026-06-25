@@ -1,5 +1,6 @@
 import asyncio
 import sys
+import uuid
 
 from dotenv import load_dotenv
 from google.adk.agents import Agent
@@ -12,7 +13,6 @@ load_dotenv()
 
 LLM="gemini-2.5-flash"
 
-my_user_id = "adk_adventurer_001"
 
 # Sports news agent
 sports_news_agent = Agent(
@@ -117,6 +117,7 @@ async def main():
     """Main function to initiate the agent run."""
     router_session = None
     worker_session = None
+    user_id = uuid.uuid4()
     while True:
         try:
             query = input("\n\nUser query: ")
@@ -128,16 +129,16 @@ async def main():
         print(f"Processing New Query: '{query}'")
         print("=" * 60)
         print("Router deciding on expert...")
-        router_session = await session_service.create_session(app_name=router_agent.name, user_id=my_user_id)
-        chosen_reporter = await run_agent_query(router_agent, query, router_session, my_user_id, is_router=True)
+        router_session = await session_service.create_session(app_name=router_agent.name, user_id=user_id)
+        chosen_reporter = await run_agent_query(router_agent, query, router_session, user_id, is_router=True)
         chosen_reporter = chosen_reporter.strip().replace("'", "")
         print(f"Router has selected the expert: '{chosen_reporter}'")
 
         if chosen_reporter in news_reporters:
             news_reporter = news_reporters[chosen_reporter]
             print(f"--- Handing off to {news_reporter.name} ---")
-            worker_session = await session_service.create_session(app_name=news_reporter.name, user_id=my_user_id)
-            await run_agent_query(news_reporter, query, worker_session, my_user_id)
+            worker_session = await session_service.create_session(app_name=news_reporter.name, user_id=user_id)
+            await run_agent_query(news_reporter, query, worker_session, user_id)
             print(f"--- {news_reporter.name} Complete ---")
         else:
             print("Error: Router could not find an expert to process your query")
