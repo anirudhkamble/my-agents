@@ -28,6 +28,12 @@ Similary you setup the other agent(s).
 ## How to use the agents?
 ```shell
 cd news-agent
+source .venv/bin/activate
 python3 agents.py
 ```
+To exit virtual environment run
+```
+deactivate
+```
+
 Similary you run the other agent(s).
