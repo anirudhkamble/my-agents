@@ -10,10 +10,18 @@ AI agent built using Google ADK provides news articles. A router agent depending
 
 
 ## Setup the environment
+1. Setup the virtual environment and installed dependency packages.
 ```shell
 cd news-agent
 ./setup.sh
 ```
+
+2. Add the API Key
+```shell
+cp .env.example .env
+```
+__Replace the <GOOGLE_API_KEY> with your API Key in .env file.__
+
 Similary you setup the other agent(s).
 
 
