@@ -1,0 +1,7 @@
+dotenv
+typing
+langgraph
+langchain
+langchain_community
+langchain_chroma
+langchain-google-genai
