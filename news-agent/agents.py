@@ -117,7 +117,7 @@ async def main():
     """Main function to initiate the agent run."""
     router_session = None
     worker_session = None
-    user_id = uuid.uuid4()
+    user_id = str(uuid.uuid4())
     while True:
         try:
             query = input("\n\nUser query: ")
